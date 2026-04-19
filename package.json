@@ -1,0 +1,24 @@
+{
+  "name": "3d-data-visualisation",
+  "version": "1.0.0",
+  "description": "This project is part of Bachelor's Thesis for Data Science and Business Analytics.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sofiia-Khrystyna/3d-data-visualisation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sofiia-Khrystyna/3d-data-visualisation/issues"
+  },
+  "homepage": "https://github.com/Sofiia-Khrystyna/3d-data-visualisation#readme",
+  "dependencies": {
+    "three": "^0.184.0"
+  }
+}
