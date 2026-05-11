@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 RAW_DIR = "data-processing/source-data"
-OUTPUT_CSV = "data-processing/structured-data/hydraulic_data.csv"
+OUTPUT_CSV = "public/hydraulic_data.csv"
 
 SENSORS = [
     "PS1",
@@ -104,6 +104,39 @@ def build_csv():
     print(combined[preview_cols].head(3).to_string(index=False))
 
 
+def build_timeseries_csv():
+    print("Building time-series dataset...")
+
+    sensor_frames = []
+
+    for name in SENSORS:
+        path = os.path.join(RAW_DIR, f"{name}.txt")
+        raw = pd.read_csv(path, sep="\t", header=None)
+
+        rows = []
+        for cycle_idx, row in raw.iterrows():
+            for t, value in enumerate(row):
+                rows.append({"cycle": cycle_idx + 1, "time": t, name: value})
+
+        sensor_frames.append(pd.DataFrame(rows))
+
+    # Merge all sensors
+    combined = sensor_frames[0]
+    for df in sensor_frames[1:]:
+        combined = combined.merge(df, on=["cycle", "time"])
+
+    # Add labels (per cycle)
+    labels = load_labels()
+    combined = combined.merge(labels, left_on="cycle", right_index=True)
+
+    output = "public/hydraulic_timeseries.csv"
+    combined.to_csv(output, index=False)
+
+    print(f"Saved: {output}")
+    print(f"Shape: {combined.shape}")
+
+
 if __name__ == "__main__":
     build_csv()
+    build_timeseries_csv()
     print("\nDone!")

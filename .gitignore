@@ -1,2 +1,4 @@
 source-data/
 node_modules/
+.DS_Store
+.vscode/

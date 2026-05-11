@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hydraulic System — 3D Visualization</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+<div id="app">
+  <canvas id="three-canvas"></canvas>
+
+  <header>
+    <span class="logo">HydroViz 3D</span>
+    <div id="chart-tabs">
+      <button class="tab active" data-chart="scatter">Scatter</button>
+      <button class="tab"        data-chart="trail">Trail</button>
+      <button class="tab"        data-chart="surface">Surface</button>
+    </div>
+  </header>
+
+  <div id="controls">
+    <div class="control-section-label">Axes</div>
+    <div class="control-group">
+      <label><span class="axis-dot x"></span>X axis</label>
+      <select id="x-axis"></select>
+    </div>
+    <div class="control-group">
+      <label><span class="axis-dot y"></span>Y axis</label>
+      <select id="y-axis"></select>
+    </div>
+    <div class="control-group">
+      <label><span class="axis-dot z"></span>Z axis</label>
+      <select id="z-axis"></select>
+    </div>
+    <div class="divider"></div>
+    <div class="control-section-label">Color by</div>
+    <div class="control-group">
+      <select id="color-by"></select>
+    </div>
+  </div>
+
+  <div id="legend"></div>
+  <div id="tooltip"></div>
+
+  <div id="info-bar">
+    <span id="info-chart">3D Scatter</span>
+    <span class="info-sep">·</span>
+    <span id="info-points">— cycles</span>
+    <span class="info-hint">Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Hover for details</span>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
