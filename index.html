@@ -1,55 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hydraulic System — 3D Visualization</title>
-  <link rel="stylesheet" href="src/style.css" />
-</head>
-<body>
-<div id="app">
-  <canvas id="three-canvas"></canvas>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>3D Cycle Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Outfit:wght@300;400;500;600&display=swap"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="c"></canvas>
+      <header>
+        <span class="logo">HydroViz 3D</span>
+        <div id="tabs">
+          <button class="tab active" data-chart="trail">Trail</button>
+          <button class="tab" data-chart="ribbons">Parallel Ribbons</button>
+        </div>
+      </header>
 
-  <header>
-    <span class="logo">HydroViz 3D</span>
-    <div id="chart-tabs">
-      <button class="tab active" data-chart="scatter">Scatter</button>
-      <button class="tab"        data-chart="trail">Trail</button>
-      <button class="tab"        data-chart="surface">Surface</button>
-    </div>
-  </header>
+      <div id="left">
+        <div class="panel" id="axis-panel">
+          <div class="pl">Axes</div>
+          <div class="cg">
+            <label><span class="dot dx"></span>X</label
+            ><select id="sx"></select>
+          </div>
+          <div class="cg">
+            <label><span class="dot dy"></span>Y</label
+            ><select id="sy"></select>
+          </div>
+          <div class="cg">
+            <label><span class="dot dz"></span>Z</label
+            ><select id="sz"></select>
+          </div>
+          <div class="divl"></div>
+          <div class="pl">Color by</div>
+          <div class="cg">
+            <select id="sc">
+              <option value="cooler">Cooler Condition</option>
+              <option value="valve">Valve Condition</option>
+              <option value="pump">Pump Leakage</option>
+              <option value="accumulator">Accumulator Pressure</option>
+              <option value="stable">System Stability</option>
+            </select>
+          </div>
+        </div>
 
-  <div id="controls">
-    <div class="control-section-label">Axes</div>
-    <div class="control-group">
-      <label><span class="axis-dot x"></span>X axis</label>
-      <select id="x-axis"></select>
-    </div>
-    <div class="control-group">
-      <label><span class="axis-dot y"></span>Y axis</label>
-      <select id="y-axis"></select>
-    </div>
-    <div class="control-group">
-      <label><span class="axis-dot z"></span>Z axis</label>
-      <select id="z-axis"></select>
-    </div>
-    <div class="divider"></div>
-    <div class="control-section-label">Color by</div>
-    <div class="control-group">
-      <select id="color-by"></select>
-    </div>
-  </div>
+        
+        <div class="panel">
+          <div class="pl">Cycle</div>
+          <div id="cycle-list"></div>
+        </div>
+      </div>
+      <div class="panel" id="status"></div>
+      <div id="tt"></div>
 
-  <div id="legend"></div>
-  <div id="tooltip"></div>
-
-  <div id="info-bar">
-    <span id="info-chart">3D Scatter</span>
-    <span class="info-sep">·</span>
-    <span id="info-points">— cycles</span>
-    <span class="info-hint">Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Hover for details</span>
-  </div>
-</div>
-<script type="module" src="src/main.js"></script>
-</body>
+      <div id="bar">
+        <span id="bct">3D Trail</span>
+        <span style="color: var(--border2)">·</span>
+        <span id="bpt">—</span>
+        <span id="bhi">Drag · Scroll · Hover for details</span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>

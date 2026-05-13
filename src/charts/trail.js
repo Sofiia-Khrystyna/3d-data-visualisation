@@ -1,51 +1,46 @@
 import * as THREE from "three";
-import { LABEL_COLORS } from "../main.js";
+import { conditionColor } from "../utils/colours.js";
 
-export function buildTrail(group, xs, ys, zs, labels, data) {
-  const n = xs.length;
-  const order = Array.from({ length: n }, (_, i) => i)
-    .sort((a, b) => +data[a].cycle - +data[b].cycle);
-
-  let prevLabel = null;
-  let segPositions = [];
-
-  const flush = (lbl) => {
-    if (segPositions.length < 6) return;
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.Float32BufferAttribute(segPositions, 3));
-    group.add(new THREE.Line(geo, new THREE.LineBasicMaterial({
-      color: LABEL_COLORS[lbl] || 0x888888,
-      transparent: true, opacity: 0.7,
-    })));
-    segPositions = [];
-  };
-
-  for (const i of order) {
-    const lbl = labels[i];
-    if (lbl !== prevLabel && prevLabel !== null) {
-      const last = segPositions.slice(-3);
-      flush(prevLabel);
-      segPositions.push(...last);
-    }
-    segPositions.push(xs[i], ys[i], zs[i]);
-    prevLabel = lbl;
+export function buildTrail(CG, xs, ys, zs) {
+  const N = xs.length;
+  for (let i = 0; i < N - 1; i++) {
+    const c = conditionColor(i, N);
+    const seg = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(xs[i], ys[i], zs[i]),
+      new THREE.Vector3(xs[i + 1], ys[i + 1], zs[i + 1]),
+    ]);
+    CG.add(
+      new THREE.Line(
+        seg,
+        new THREE.LineBasicMaterial({
+          color: c,
+          transparent: true,
+          opacity: 0.85,
+        }),
+      ),
+    );
   }
-  flush(prevLabel);
-
-  // Dots on top for hover — userData.indices maps vertex → data row
-  const allPos = order.flatMap(i => [xs[i], ys[i], zs[i]]);
-  const colors = order.flatMap(i => {
-    const c = new THREE.Color(LABEL_COLORS[labels[i]] || 0x888888);
-    return [c.r, c.g, c.b];
-  });
-
+  const pos = new Float32Array(xs.flatMap((x, i) => [x, ys[i], zs[i]]));
+  const cols = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const c = conditionColor(i, N);
+    cols[i * 3] = c.r;
+    cols[i * 3 + 1] = c.g;
+    cols[i * 3 + 2] = c.b;
+  }
   const geo = new THREE.BufferGeometry();
-  geo.setAttribute("position", new THREE.Float32BufferAttribute(allPos, 3));
-  geo.setAttribute("color",    new THREE.Float32BufferAttribute(colors, 3));
-
-  const pts = new THREE.Points(geo, new THREE.PointsMaterial({
-    vertexColors: true, size: 0.09, sizeAttenuation: true, transparent: true, opacity: 0.9,
-  }));
-  pts.userData.indices = order;   // vertex k corresponds to data row order[k]
-  group.add(pts);
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute("color", new THREE.Float32BufferAttribute(cols, 3));
+  const pts = new THREE.Points(
+    geo,
+    new THREE.PointsMaterial({
+      vertexColors: true,
+      size: 0.14,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: 0.95,
+    }),
+  );
+  pts.userData.indices = Array.from({ length: N }, (_, i) => i);
+  CG.add(pts);
 }
