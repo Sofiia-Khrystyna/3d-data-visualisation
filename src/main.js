@@ -6,7 +6,8 @@ import { getVals, normVals, fmtTick } from "./utils/data.js";
 import { conditionColor } from "./utils/colours.js";
 import { buildRibbons } from "./charts/ribbons.js";
 import { buildTrail } from "./charts/trail.js";
-import { draw2DTrail } from "./charts/chart2d.js";
+import { draw2DTrail } from "./charts/chart2dTrail.js";
+import { draw2DRibbons } from "./charts/chart2dRibbon.js";
 import { buildAxes } from "./ui/axes.js";
 import { initTooltip } from "./ui/tooltip.js";
 import { buildCycleList } from "./ui/cycleList.js";
@@ -96,6 +97,8 @@ function build() {
   } else {
     if (MODE === "trail") {
       draw2DTrail(xs, ys, zs, rawY, rawZ, YF, ZF, currentCycle);
+    } else {
+      draw2DRibbons(xs, currentCycle, YF);
     }
   }
   updateStatus(cyc);

@@ -77,4 +77,37 @@ const SENSOR_PRESETS = {
   },
 };
 
-export { SENSORS, STATUS_COLORS, AL, SENSOR_PRESETS };
+const RIBBON_COMPONENTS = [
+  {
+    key: "cooler",
+    label: "Cooler",
+    sensors: ["CE", "CP"],
+    labelKey: "cooler",
+  },
+  {
+    key: "valve",
+    label: "Valve",
+    sensors: ["PS2", "FS2"],
+    labelKey: "valve",
+  },
+  {
+    key: "pump",
+    label: "Pump",
+    sensors: ["PS1", "PS5", "PS6"],
+    labelKey: "pump",
+  },
+  {
+    key: "accumulator",
+    label: "Accumulator",
+    sensors: ["PS3", "PS4"],
+    labelKey: "accumulator",
+  },
+  {
+    key: "stable",
+    label: "Stability",
+    sensors: ["SE", "VS1"],
+    labelKey: "stable",
+  },
+];
+
+export { SENSORS, STATUS_COLORS, AL, SENSOR_PRESETS, RIBBON_COMPONENTS };

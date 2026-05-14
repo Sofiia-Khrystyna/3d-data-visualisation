@@ -1,46 +1,14 @@
 import * as THREE from "three";
-import { STATUS_COLORS, AL } from "../../constants.js";
-
-// Each component maps to its most diagnostic sensors
-const COMPONENTS = [
-  {
-    key: "cooler",
-    label: "Cooler",
-    sensors: ["CE", "CP"],
-    labelKey: "cooler",
-  },
-  {
-    key: "valve",
-    label: "Valve",
-    sensors: ["PS2", "FS2"],
-    labelKey: "valve",
-  },
-  {
-    key: "pump",
-    label: "Pump",
-    sensors: ["PS1", "PS5", "PS6"],
-    labelKey: "pump",
-  },
-  {
-    key: "accumulator",
-    label: "Accumulator",
-    sensors: ["PS3", "PS4"],
-    labelKey: "accumulator",
-  },
-  {
-    key: "stable",
-    label: "Stability",
-    sensors: ["SE", "VS1"],
-    labelKey: "stable",
-  },
-];
+import { STATUS_COLORS, AL, RIBBON_COMPONENTS } from "../../constants.js";
 
 const T = 60;
 
 export function buildRibbons(group, xs, ys, zs, cyc, YF) {
-  const zStep = AL / (COMPONENTS.length - 1);
+  const zStep = AL / (RIBBON_COMPONENTS
+  .length - 1);
 
-  COMPONENTS.forEach((comp, si) => {
+  RIBBON_COMPONENTS
+.forEach((comp, si) => {
     const available = comp.sensors.filter((s) => cyc.sensors[s]?.length > 0);
     if (available.length === 0) return;
 
