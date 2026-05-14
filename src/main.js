@@ -6,10 +6,13 @@ import { getVals, normVals, fmtTick } from "./utils/data.js";
 import { conditionColor } from "./utils/colours.js";
 import { buildRibbons } from "./charts/ribbons.js";
 import { buildTrail } from "./charts/trail.js";
+import { draw2DTrail } from "./charts/chart2d.js";
 import { buildAxes } from "./ui/axes.js";
 import { initTooltip } from "./ui/tooltip.js";
 import { buildCycleList } from "./ui/cycleList.js";
 import { updateStatus } from "./ui/statusPanel.js";
+
+let VIEW_MODE = "3d";
 
 // MARK: Scene
 const renderer = new THREE.WebGLRenderer({
@@ -65,8 +68,6 @@ function dispose(g) {
 
 // MARK: Main build
 function build() {
-  dispose(CG);
-  dispose(AG);
   const cyc = currentCycle;
   const rawY = getVals(cyc, YF);
   const rawZ = getVals(cyc, ZF);
@@ -85,9 +86,18 @@ function build() {
     statusPanel.style.display = MODE === "ribbons" ? "block" : "none";
   }
 
-  if (MODE === "trail") buildTrail(CG, xs, ys, zs, color, rawY, rawZ, YF, ZF);
-  else buildRibbons(CG, xs, ys, zs, cyc, YF);
-  buildAxes(AG, XF, YF, ZF, cyc);
+  if (VIEW_MODE === "3d") {
+    dispose(CG);
+    dispose(AG);
+    if (MODE === "trail") buildTrail(CG, xs, ys, zs, color, rawY, rawZ, YF, ZF);
+    else buildRibbons(CG, xs, ys, zs, cyc, YF);
+
+    buildAxes(AG, XF, YF, ZF, cyc);
+  } else {
+    if (MODE === "trail") {
+      draw2DTrail(xs, ys, zs, rawY, rawZ, YF, ZF, currentCycle);
+    }
+  }
   updateStatus(cyc);
   if (MODE !== "ribbons")
     document.getElementById("bpt").textContent =
@@ -143,6 +153,26 @@ document.querySelectorAll(".tab").forEach((b) => {
     build();
   });
 });
+
+document.querySelectorAll(".view-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".view-btn")
+      .forEach((b) => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    VIEW_MODE = btn.dataset.view;
+
+    renderer.domElement.style.display = VIEW_MODE === "3d" ? "block" : "none";
+
+    document.getElementById("chart2d").style.display =
+      VIEW_MODE === "2d" ? "block" : "none";
+
+    build();
+  });
+});
+
 document.getElementById("sx").addEventListener("change", (e) => {
   XF = e.target.value;
   build();

@@ -98,6 +98,38 @@ header {
   font-weight: 600;
 }
 
+#chart2d {
+  position: fixed;
+  inset: 0;
+  width: 85vw !important;
+  height: auto !important;
+  justify-self: right;
+  align-self: center;
+  display: none;
+  background: #080c12;
+  z-index: 0;
+}
+
+#view-toggle {
+  display: flex;
+  gap: 8px;
+  margin-left: 16px;
+}
+
+.view-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d7e1ea;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.view-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 #left {
   position: absolute;
   top: 62px;

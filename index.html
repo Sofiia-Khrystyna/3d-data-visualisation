@@ -14,11 +14,16 @@
   <body>
     <div id="app">
       <canvas id="c"></canvas>
+      <canvas id="chart2d"></canvas>
       <header>
         <span class="logo">HydroViz 3D</span>
         <div id="tabs">
           <button class="tab active" data-chart="trail">Trail</button>
           <button class="tab" data-chart="ribbons">Parallel Ribbons</button>
+        </div>
+        <div id="view-toggle">
+          <button class="view-btn active" data-view="3d">3D</button>
+          <button class="view-btn" data-view="2d">2D</button>
         </div>
       </header>
 
@@ -50,7 +55,6 @@
           </div>
         </div>
 
-        
         <div class="panel">
           <div class="pl">Cycle</div>
           <div id="cycle-list"></div>

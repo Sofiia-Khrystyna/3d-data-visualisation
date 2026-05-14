@@ -6,7 +6,7 @@ import * as THREE from "three";
 // direction 'down' = sensor drops as component degrades (e.g. efficiency)
 // direction 'neutral' = weak/no correlation with health state
 // healthyMean = mean value across all healthy cycles (full_efficiency + no_leakage)
-const SENSOR_DIRECTION = {
+export const SENSOR_DIRECTION = {
   TS1: { direction: "up", healthyMean: 35.898, healthyStd: 0.884 },
   TS2: { direction: "up", healthyMean: 41.544, healthyStd: 0.909 },
   TS3: { direction: "up", healthyMean: 38.844, healthyStd: 0.945 },
@@ -30,7 +30,7 @@ const SENSOR_DIRECTION = {
 // ── Compute danger score for one raw sensor reading ───────────────────────────
 // Returns 0.0 = perfectly healthy, 1.0 = maximally dangerous
 // This is clamped to [0, 1] so extreme outliers don't break the color scale.
-function dangerScore(rawValue, sensorKey) {
+export function dangerScore(rawValue, sensorKey) {
   const info = SENSOR_DIRECTION[sensorKey];
   if (!info || info.direction === "neutral") return 0.0;
   // console.log(sensorKey, rawValue, typeof rawValue);
@@ -50,7 +50,7 @@ function dangerScore(rawValue, sensorKey) {
 // ── Map danger score to color ──────────────────────────────────────────────────
 // 0.0 = green (healthy), 0.5 = yellow (warning), 1.0 = red (critical)
 // Uses HSL: hue 120° = green, 60° = yellow, 0° = red
-function dangerColor(score) {
+export function dangerColor(score) {
   const hue = ((1.0 - score) * 120) / 360; // 0.333 (green) → 0 (red)
   const sat = 0.85;
   const lit = 0.45 + score * 0.1; // slightly brighter when critical
