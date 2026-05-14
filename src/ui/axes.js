@@ -59,7 +59,7 @@ export function buildAxes(AG, XF, YF, ZF, cyc) {
     cv.height = 48;
     const cx = cv.getContext("2d");
     cx.clearRect(0, 0, 256, 48);
-    cx.font = '500 17px "IBM Plex Mono",monospace';
+    cx.font = '500 32px "IBM Plex Mono",monospace';
     cx.fillStyle = col;
     cx.textAlign = "center";
     cx.textBaseline = "middle";
@@ -81,7 +81,7 @@ export function buildAxes(AG, XF, YF, ZF, cyc) {
     cv.height = 64;
     const cx = cv.getContext("2d");
     cx.clearRect(0, 0, 512, 64);
-    cx.font = 'bold 19px "Outfit",sans-serif';
+    cx.font = 'bold 40px "Outfit",sans-serif';
     cx.fillStyle = col;
     cx.textAlign = "left";
     cx.textBaseline = "middle";
