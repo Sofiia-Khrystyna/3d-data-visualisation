@@ -82,7 +82,7 @@ function build() {
   const statusPanel = document.getElementById("status");
 
   if (statusPanel) {
-    statusPanel.style.display = MODE === "ribbons" ? "block" : "none";
+    statusPanel.style.display = MODE === "ribbons" ? "block" : "block";
   }
 
   if (MODE === "trail") buildTrail(CG, xs, ys, zs, color, rawY, rawZ, YF, ZF);
@@ -159,8 +159,10 @@ document.getElementById("sc").addEventListener("change", (e) => {
   COLOR_MODE = e.target.value;
 
   populateSelects();
-
-  build();
+  buildCycleList(currentCycle, COLOR_MODE, (cyc) => {
+    currentCycle = cyc;
+    build();
+  });
 });
 addEventListener("resize", () => {
   cam.aspect = innerWidth / innerHeight;
