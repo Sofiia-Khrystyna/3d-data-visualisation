@@ -40,4 +40,41 @@ const STATUS_COLORS = {
 
 const AL = 10;
 
-export { SENSORS, STATUS_COLORS, AL };
+const SENSOR_PRESETS = {
+  cooler: {
+    x: "time",
+    y: "TS1",
+    z: "CE",
+    allowed: ["TS1", "TS2", "TS4", "PS5", "PS6", "CE", "CP", "time"],
+  },
+
+  pump: {
+    x: "time",
+    y: "SE",
+    z: "FS1",
+    allowed: ["SE", "FS1", "EPS1", "time"],
+  },
+
+  stable: {
+    x: "time",
+    y: "SE",
+    z: "FS1",
+    allowed: ["SE", "FS1", "time"],
+  },
+
+  accumulator: {
+    x: "time",
+    y: "CP",
+    z: "EPS1",
+    allowed: ["CP", "EPS1", "time"],
+  },
+
+  valve: {
+    x: "time",
+    y: "PS2",
+    z: "FS2",
+    allowed: ["PS2", "FS2", "time"],
+  },
+};
+
+export { SENSORS, STATUS_COLORS, AL, SENSOR_PRESETS };

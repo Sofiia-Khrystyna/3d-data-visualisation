@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CYCLES } from "../data-processing/loader.js";
-import { SENSORS, STATUS_COLORS, AL } from "../constants.js";
+import { SENSORS, STATUS_COLORS, AL, SENSOR_PRESETS } from "../constants.js";
 import { getVals, normVals, fmtTick } from "./utils/data.js";
 import { conditionColor } from "./utils/colours.js";
 import { buildRibbons } from "./charts/ribbons.js";
@@ -76,7 +76,8 @@ function build() {
 
   const color = conditionColor(cyc, COLOR_MODE);
   const axisPanel = document.getElementById("axis-panel"); // give your axes panel div this id
-  if (axisPanel) axisPanel.style.display = MODE === "ribbons" ? "none" : "block";
+  if (axisPanel)
+    axisPanel.style.display = MODE === "ribbons" ? "none" : "block";
 
   const statusPanel = document.getElementById("status");
 
@@ -101,20 +102,34 @@ function build() {
 
 // MARK: Selects
 function populateSelects() {
+  const preset = SENSOR_PRESETS[COLOR_MODE];
+
+  const allowed = preset.allowed;
+
   [
-    ["sx", "time"],
-    ["sy", "PS1"],
-    ["sz", "TS1"],
+    ["sx", preset.x],
+    ["sy", preset.y],
+    ["sz", preset.z],
   ].forEach(([id, def]) => {
     const el = document.getElementById(id);
-    SENSORS.forEach((s) => {
+
+    el.innerHTML = "";
+
+    SENSORS.filter((s) => allowed.includes(s.v)).forEach((s) => {
       const o = document.createElement("option");
+
       o.value = s.v;
       o.textContent = s.l;
+
       if (s.v === def) o.selected = true;
+
       el.appendChild(o);
     });
   });
+
+  XF = preset.x;
+  YF = preset.y;
+  ZF = preset.z;
 }
 
 // MARK: Events
@@ -142,6 +157,9 @@ document.getElementById("sz").addEventListener("change", (e) => {
 });
 document.getElementById("sc").addEventListener("change", (e) => {
   COLOR_MODE = e.target.value;
+
+  populateSelects();
+
   build();
 });
 addEventListener("resize", () => {
