@@ -82,7 +82,7 @@ function build() {
   const statusPanel = document.getElementById("status");
 
   if (statusPanel) {
-    statusPanel.style.display = MODE === "ribbons" ? "block" : "block";
+    statusPanel.style.display = MODE === "ribbons" ? "block" : "none";
   }
 
   if (MODE === "trail") buildTrail(CG, xs, ys, zs, color, rawY, rawZ, YF, ZF);
