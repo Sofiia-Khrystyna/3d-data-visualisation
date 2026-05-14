@@ -2,7 +2,10 @@ import * as THREE from "three";
 import { STATUS_COLORS } from "../../constants.js";
 
 export function conditionColor(cyc, mode) {
-  let key = "";
+  // console.log("conditionColor called with labels:", cyc, "mode:", mode);
+  let key = cyc[mode + "_label"];
+
+  // console.log("key resolved to:", key);
 
   switch (mode) {
     case "cooler":
@@ -25,6 +28,7 @@ export function conditionColor(cyc, mode) {
       key = cyc.stable_label;
       break;
   }
-
-  return new THREE.Color(STATUS_COLORS[key] || "#ffffff");
+  const result = STATUS_COLORS[key] || "#ffffff";
+  // console.log("color result:", result);
+  return new THREE.Color(result);
 }

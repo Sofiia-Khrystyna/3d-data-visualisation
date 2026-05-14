@@ -68,14 +68,23 @@ function build() {
   dispose(CG);
   dispose(AG);
   const cyc = currentCycle;
-  const xs = normVals(getVals(cyc, XF));
-  const ys = normVals(getVals(cyc, YF));
-  const zs = normVals(getVals(cyc, ZF));
-  const color = conditionColor(cyc.labels, COLOR_MODE);
-  const axisPanel = document.getElementById("axis-panel"); // give your axes panel div this id
-  if (axisPanel) axisPanel.style.opacity = MODE === "ribbons" ? "0.8" : "1";
+  const rawY = getVals(cyc, YF);
+  const rawZ = getVals(cyc, ZF);
+  const xs = normVals(getVals(cyc, XF), XF);
+  const ys = normVals(rawY, YF).map((v) => v * 1);
+  const zs = normVals(rawZ, ZF).map((v) => v * 1);
 
-  if (MODE === "trail") buildTrail(CG, xs, ys, zs, color);
+  const color = conditionColor(cyc, COLOR_MODE);
+  const axisPanel = document.getElementById("axis-panel"); // give your axes panel div this id
+  if (axisPanel) axisPanel.style.display = MODE === "ribbons" ? "none" : "block";
+
+  const statusPanel = document.getElementById("status");
+
+  if (statusPanel) {
+    statusPanel.style.display = MODE === "ribbons" ? "block" : "none";
+  }
+
+  if (MODE === "trail") buildTrail(CG, xs, ys, zs, color, rawY, rawZ, YF, ZF);
   else buildRibbons(CG, xs, ys, zs, cyc, YF);
   buildAxes(AG, XF, YF, ZF, cyc);
   updateStatus(cyc);
