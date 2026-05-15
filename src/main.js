@@ -196,6 +196,7 @@ document.getElementById("sc").addEventListener("change", (e) => {
     currentCycle = cyc;
     build();
   });
+  build();
 });
 addEventListener("resize", () => {
   cam.aspect = innerWidth / innerHeight;
