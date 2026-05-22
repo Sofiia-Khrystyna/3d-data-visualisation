@@ -212,11 +212,6 @@ for comp_col, score_map in [
 print("\n\nGenerating correlation heatmap...")
 
 fig, axes_plot = plt.subplots(1, 5, figsize=(18, 7))
-fig.suptitle(
-    "Pearson Correlation: Sensor Mean vs Component Health Score\n"
-    "Bachelor Thesis — Sofiia-Khrystyna Borysiuk",
-    fontsize=13, fontweight="bold", y=1.01
-)
 
 comp_order   = ["COOLER", "VALVE", "PUMP", "ACCUMULATOR", "STABLE"]
 colors_pos   = plt.cm.RdYlGn   # green=positive (sensor rises with health)
